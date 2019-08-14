@@ -691,7 +691,7 @@ def return_visualize_boxes_and_labels_on_image_array(
     keypoints=None,
     track_ids=None,
     use_normalized_coordinates=False,
-    max_boxes_to_draw=1,
+    max_boxes_to_draw=20,
     min_score_thresh=0.5,
     agnostic_mode=False,
     line_thickness=4,
@@ -753,6 +753,7 @@ def return_visualize_boxes_and_labels_on_image_array(
   box_to_track_ids_map = {}
   if not max_boxes_to_draw:
     max_boxes_to_draw = boxes.shape[0]
+  class_list=[]
   for i in range(min(max_boxes_to_draw, boxes.shape[0])):
     if scores is None or scores[i] > min_score_thresh:
       box = tuple(boxes[i].tolist())
@@ -774,6 +775,7 @@ def return_visualize_boxes_and_labels_on_image_array(
               class_name = category_index[classes[i]]['name']
             else:
               class_name = 'N/A'
+            class_list.append(str(class_name))
             display_str = str(class_name)
         if not skip_scores:
           if not display_str:
@@ -797,8 +799,10 @@ def return_visualize_boxes_and_labels_on_image_array(
               classes[i] % len(STANDARD_COLORS)]
 
   # Draw all boxes onto image.
+  boxes_list = [] 
   for box, color in box_to_color_map.items():
     ymin, xmin, ymax, xmax = box
+    boxes_list.append(box)
     if instance_masks is not None:
       draw_mask_on_image_array(
           image,
@@ -829,7 +833,8 @@ def return_visualize_boxes_and_labels_on_image_array(
           color=color,
           radius=line_thickness / 2,
           use_normalized_coordinates=use_normalized_coordinates)
-  return image,ymin,xmin,ymax,xmax,class_name
+  return image,class_list,boxes_list
+############################################################################################################
 
 def visualize_boxes_and_labels_on_image_array(
     image,
@@ -842,7 +847,7 @@ def visualize_boxes_and_labels_on_image_array(
     keypoints=None,
     track_ids=None,
     use_normalized_coordinates=False,
-    max_boxes_to_draw=1,
+    max_boxes_to_draw=20,
     min_score_thresh=0.5,
     agnostic_mode=False,
     line_thickness=4,
@@ -981,7 +986,7 @@ def visualize_boxes_and_labels_on_image_array(
           radius=line_thickness / 2,
           use_normalized_coordinates=use_normalized_coordinates)
   return image 
-
+#################################################################################################################
 def add_cdf_image_summary(values, name):
   """Adds a tf.summary.image for a CDF plot of the values.
 
