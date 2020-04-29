@@ -3,7 +3,7 @@
 Additionally, you also need to adapt feature map depending on the classes you trained on.
 
 
-
+![](Screenshot.png)
 
 This Repository contains extension of Tensorflow Object Detection API for semi-automated annotation.
 The network of choice needs to be trained on desired classes.
