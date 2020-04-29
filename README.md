@@ -1,5 +1,5 @@
-# Semi-AutomatedAnnotation
-# NOTE : Works after you have Working Tensorflow Object Detection API Model, add these scripts and replace "vis_util.py"
+# Semi-Automated Bbox Annotation 
+### NOTE : Works after you have Working Tensorflow Object Detection API Model, add these scripts and replace "vis_util.py"
 Additionally, you also need to adapt feature map depending on the classes you trained on.
 
 
